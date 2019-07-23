@@ -16,7 +16,7 @@ class GroupAPlayer(models.Model):
     winnings = models.IntegerField()
 
     def __str__(self):
-        return self.tournament + " - Group A: " + self.name
+        return self.name
 
 
 class GroupBPlayer(models.Model):
@@ -25,7 +25,7 @@ class GroupBPlayer(models.Model):
     winnings = models.IntegerField()
 
     def __str__(self):
-        return self.tournament + " - Group B: " + self.name
+        return self.name
 
 
 class GroupCPlayer(models.Model):
@@ -34,7 +34,7 @@ class GroupCPlayer(models.Model):
     winnings = models.IntegerField()
 
     def __str__(self):
-        return self.tournament + " - Group C: " + self.name
+        return self.name
 
 
 class GroupDPlayer(models.Model):
@@ -43,7 +43,7 @@ class GroupDPlayer(models.Model):
     winnings = models.IntegerField()
 
     def __str__(self):
-        return self.tournament + " - Group D: " + self.name
+        return self.name
 
 
 class Person(models.Model):
@@ -55,4 +55,4 @@ class Person(models.Model):
     pick_d = models.ForeignKey(GroupDPlayer, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.tournament + " - " + self.name
+        return self.name
