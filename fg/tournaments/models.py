@@ -2,9 +2,9 @@ from django.db import models
 
 class Player(models.Model):
     name = models.CharField(max_length=200, unique=True)
-    
+
     class Meta:
-        ordering = ('name',)
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -12,6 +12,8 @@ class Player(models.Model):
 
 class Person(models.Model):
     name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    total_winnings = models.IntegerField(blank=True)
 
     class Meta:
         ordering = ['name']
@@ -23,8 +25,8 @@ class Person(models.Model):
 class Tournament(models.Model):
     name = models.CharField(max_length=200)
     file_name = models.CharField(max_length=200, blank=True)
-    start_date = models.DateTimeField('start date')
-    end_date = models.DateTimeField('end date')
+    start_date = models.DateField('start date')
+    end_date = models.DateField('end date')
     
     class Meta:
         ordering = ['name']
@@ -42,7 +44,7 @@ class GroupAPlayer(models.Model):
         ordering = ['tournament','player']
 
     def __str__(self):
-        return self.player.name
+        return self.tournament.name + " - " + self.player.name
 
 
 class GroupBPlayer(models.Model):
@@ -54,7 +56,7 @@ class GroupBPlayer(models.Model):
         ordering = ['tournament','player']
 
     def __str__(self):
-        return self.player.name
+        return self.tournament.name + " - " + self.player.name
 
 
 class GroupCPlayer(models.Model):
@@ -66,7 +68,7 @@ class GroupCPlayer(models.Model):
         ordering = ['tournament','player']
 
     def __str__(self):
-        return self.player.name
+        return self.tournament.name + " - " + self.player.name
 
 
 class GroupDPlayer(models.Model):
@@ -78,7 +80,7 @@ class GroupDPlayer(models.Model):
         ordering = ['tournament','player']
 
     def __str__(self):
-        return self.player.name
+        return self.tournament.name + " - " + self.player.name
 
 
 class TournamentPick(models.Model):
