@@ -1,6 +1,6 @@
 <h1>{{ tournament.name }}</h1>
 <ul>
-{% for person in tournament.person_set.all %}
-    <li>{{ person.name }}</li>
+{% for p in picks %}
+    <li>{{ p.person }} - {{ p.pick_a.player.name }} - {{ p.pick_b.player.name }} - {{ p.pick_c.player.name }} - {{ p.pick_d.player.name }}</li>
 {% endfor %}
 </ul>

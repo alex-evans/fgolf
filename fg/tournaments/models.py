@@ -92,4 +92,4 @@ class TournamentPick(models.Model):
     pick_d = models.ForeignKey(GroupDPlayer, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.tournament.name + " - " + self.person.name + " - " + self.pick_a.player.name + ", " + self.pick_b.player.name + ", " + self.pick_c.player.name + ", " + self.pick_d.player.name

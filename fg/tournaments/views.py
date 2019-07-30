@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-
-from .models import Tournament
+from .models import Tournament, TournamentPick
 
 
 def index(request):
@@ -11,4 +10,5 @@ def index(request):
 
 def detail(request, tournament_id):
     tournament = get_object_or_404(Tournament, pk=tournament_id)
-    return render(request, 'tournaments/detail.html', {'tournament': tournament})
+    picks_obj = TournamentPick.objects.filter(tournament=tournament)
+    return render(request, 'tournaments/detail.html', {'tournament': tournament, 'picks': picks_obj})

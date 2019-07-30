@@ -53,6 +53,7 @@ class Command(BaseCommand):
                     pick_c = player_group_c_obj,
                     pick_d = player_group_d_obj
                 )
+                picks.save()
                     
 
     def get_person_obj(self, person_name):
