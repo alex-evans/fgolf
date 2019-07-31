@@ -1,6 +1,31 @@
+{% extends './base.html' %}
+
+{% block content %}
+
 <h1>{{ tournament.name }}</h1>
-<ul>
-{% for p in picks %}
-    <li>{{ p.person }} - {{ p.pick_a.player.name }} - {{ p.pick_b.player.name }} - {{ p.pick_c.player.name }} - {{ p.pick_d.player.name }}</li>
-{% endfor %}
-</ul>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Person</th>
+            <th scope="col">A</th>
+            <th scope="col">B</th>
+            <th scope="col">C</th>
+            <th scope="col">D</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in picks %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ p.person }}</td>
+                <td>{{ p.pick_a.player.name }}</td>
+                <td>{{ p.pick_b.player.name }}</td>
+                <td>{{ p.pick_c.player.name }}</td>
+                <td>{{ p.pick_d.player.name }}</td>        
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
