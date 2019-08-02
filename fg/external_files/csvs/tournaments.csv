@@ -1,13 +1,13 @@
-﻿TOURNAMENT,FILE NAME,START DATE,END DATE
-The Masters,masters,2019-04-11,2019-04-14
-Wells Fargo,wells_fargo,2019-05-02,2019-05-05
-Byron Nelson,byron_nelson,2019-05-09,2019-05-12
-PGA Championship,pga,2019-05-16,2019-05-19
-The Memorial,memorial,2019-05-30,2019-06-02
-US Open,us_open,2019-06-13,2019-06-16
-3M,3m,2019-07-04,2019-07-07
-John Deere,john_deere,2019-07-11,2019-07-14
-The Open,the_open,2019-07-18,2019-07-21
-Northern Trust,northern_trust,2019-08-08,2019-08-11
-BMW,bmw,2019-08-15,2019-08-18
-Tour Championship,tour,2019-08-22,2019-08-25
+﻿TOURNAMENT,FILE NAME,START DATE,END DATE,URL
+The Masters,masters,2019-04-11,2019-04-14,https://www.espn.com/golf/leaderboard?tournamentId=401056527
+Wells Fargo,wells_fargo,2019-05-02,2019-05-05,https://www.espn.com/golf/leaderboard/_/tournamentId/401056550
+Byron Nelson,byron_nelson,2019-05-09,2019-05-12,https://www.espn.com/golf/leaderboard?tournamentId=401056551
+PGA Championship,pga,2019-05-16,2019-05-19,https://www.espn.com/golf/leaderboard?tournamentId=401056552
+The Memorial,memorial,2019-05-30,2019-06-02,https://www.espn.com/golf/leaderboard?tournamentId=401056554
+US Open,us_open,2019-06-13,2019-06-16,https://www.espn.com/golf/leaderboard?tournamentId=401056556
+3M,3m,2019-07-04,2019-07-07,https://www.espn.com/golf/leaderboard?tournamentId=401056558
+John Deere,john_deere,2019-07-11,2019-07-14,https://www.espn.com/golf/leaderboard?tournamentId=401056548
+The Open,the_open,2019-07-18,2019-07-21,https://www.espn.com/golf/leaderboard?tournamentId=401056547
+Northern Trust,northern_trust,2019-08-08,2019-08-11,https://www.espn.com/golf/leaderboard?tournamentId=401056544
+BMW,bmw,2019-08-15,2019-08-18,https://www.espn.com/golf/leaderboard?tournamentId=401056543
+Tour Championship,tour,2019-08-22,2019-08-25,https://www.espn.com/golf/leaderboard?tournamentId=401056542

@@ -19,7 +19,8 @@ class Command(BaseCommand):
                         name=row['TOURNAMENT'],
                         file_name=row['FILE NAME'],
                         start_date=row['START DATE'],
-                        end_date=row['END DATE']
+                        end_date=row['END DATE'],
+                        leaderboard_url=row['URL']
                     )
                 p.save()
         self.stdout.write(self.style.SUCCESS('Successfully loaded Tournaments'))

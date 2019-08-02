@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Tournament, TournamentPick
+from django.db.models import Sum
 
 
 def index(request):
@@ -10,5 +11,5 @@ def index(request):
 
 def detail(request, tournament_id):
     tournament = get_object_or_404(Tournament, pk=tournament_id)
-    picks_obj = TournamentPick.objects.filter(tournament=tournament)
+    picks_obj = TournamentPick.objects.filter(tournament=tournament).order_by('total_winnings')
     return render(request, 'tournaments/detail.html', {'tournament': tournament, 'picks': picks_obj})

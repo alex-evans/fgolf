@@ -51,7 +51,8 @@ class Command(BaseCommand):
                     pick_a = player_group_a_obj,
                     pick_b = player_group_b_obj,
                     pick_c = player_group_c_obj,
-                    pick_d = player_group_d_obj
+                    pick_d = player_group_d_obj,
+                    total_winnings = 0
                 )
                 picks.save()
                     

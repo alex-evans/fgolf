@@ -9,9 +9,14 @@
             <th scope="col">#</th>
             <th scope="col">Person</th>
             <th scope="col">A</th>
+            <th scope="col">Winnings</th>
             <th scope="col">B</th>
+            <th scope="col">Winnings</th>
             <th scope="col">C</th>
+            <th scope="col">Winnings</th>
             <th scope="col">D</th>
+            <th scope="col">Winnings</th>
+            <th scope="col">Total</th>
         </tr>
     </thead>
     <tbody>
@@ -20,9 +25,14 @@
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ p.person }}</td>
                 <td>{{ p.pick_a.player.name }}</td>
+                <td>{{ p.pick_a.winnings }}</td>
                 <td>{{ p.pick_b.player.name }}</td>
+                <td>{{ p.pick_b.winnings }}</td>
                 <td>{{ p.pick_c.player.name }}</td>
-                <td>{{ p.pick_d.player.name }}</td>        
+                <td>{{ p.pick_c.winnings }}</td>
+                <td>{{ p.pick_d.player.name }}</td>
+                <td>{{ p.pick_d.winnings }}</td>
+                <td>{{ p.total_winnings }}</td>
             </tr>
         {% endfor %}
     </tbody>
