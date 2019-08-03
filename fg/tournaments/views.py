@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from .models import Tournament, TournamentPick, Player
+from .models import Tournament, TournamentPick, Player, TournamentPlayer, GroupAPlayer, GroupBPlayer, GroupCPlayer, GroupDPlayer
 from bs4 import BeautifulSoup
 import requests
 
@@ -12,35 +12,33 @@ def index(request):
 
 def detail(request, tournament_id):
     tournament = get_object_or_404(Tournament, pk=tournament_id)
-    update_winnings(tournament)
+    players_winnings_list = tournament.get_winnings()
+    for player_winnings in players_winnings_list:
+        player_obj = player_winnings[0]
+        winnings = player_winnings[1]
+        try:
+            tournament_player_obj = TournamentPlayer.objects.get(tournament=tournament, player=player_obj)
+            group = tournament_player_obj.group
+            if 'A' == group:
+                g = GroupAPlayer.objects.get(tournament=tournament, player=player_obj)
+                g.winnings = winnings
+                g.save()
+            elif 'B' == group:
+                g = GroupBPlayer.objects.get(tournament=tournament, player=player_obj)
+                g.winnings = winnings
+                g.save()
+            elif 'C' == group:
+                g = GroupCPlayer.objects.get(tournament=tournament, player=player_obj)
+                g.winnings = winnings
+                g.save()
+            elif 'D' == group:
+                g = GroupDPlayer.objects.get(tournament=tournament, player=player_obj)
+                g.winnings = winnings
+                g.save()
+        except TournamentPlayer.DoesNotExist:
+            print(f"ERROR: Player, {player_obj}, not in TournamentPlayers") 
+    picks = TournamentPick.objects.all()
+    for pick in picks:
+        pick.save()
     picks_obj = TournamentPick.objects.filter(tournament=tournament).order_by('total_winnings')
     return render(request, 'tournaments/detail.html', {'tournament': tournament, 'picks': picks_obj})
-
-
-def update_winnings(tournament):
-    url = tournament.leaderboard_url
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    field = soup.find_all('tr',{'class':'Table2__tr Table2__even'})
-    players = []
-    for row in field:
-        name = row.findAll('td')[1].get_text()
-        player_obj = get_player_obj(name)
-        winnings = format_winnings(row.findAll('td')[8].get_text())
-        players.append([player_obj,winnings])
-    print(players)
-
-
-def get_player_obj(name):
-    try:
-        return Player.objects.get(name=name)
-    except Player.DoesNotExist:
-        print(f"ERROR: Player not found {name}")
-
-
-def format_winnings(winnings):
-        winnings = winnings.replace("$","").replace(",","")
-        if winnings == "--":
-            winnings = 0
-        return int(winnings)
-        

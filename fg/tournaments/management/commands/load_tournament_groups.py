@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from tournaments.models import Player, Tournament, GroupAPlayer, GroupBPlayer, GroupCPlayer, GroupDPlayer
+from tournaments.models import Player, Tournament, TournamentPlayer, GroupAPlayer, GroupBPlayer, GroupCPlayer, GroupDPlayer
 import csv
 import os
 
@@ -41,18 +41,26 @@ class Command(BaseCommand):
                     p = self.get_player_obj(row['A'])
                     g = GroupAPlayer(tournament=tournament_obj, player=p, winnings=0)
                     g.save()
+                    tp = TournamentPlayer(tournament=tournament_obj, player=p, group='A')
+                    tp.save()
                 if row['B']:
                     p = self.get_player_obj(row['B'])
                     g = GroupBPlayer(tournament=tournament_obj, player=p, winnings=0)
                     g.save()
+                    tp = TournamentPlayer(tournament=tournament_obj, player=p, group='B')
+                    tp.save()
                 if row['C']:
                     p = self.get_player_obj(row['C'])
                     g = GroupCPlayer(tournament=tournament_obj, player=p, winnings=0)
                     g.save()
+                    tp = TournamentPlayer(tournament=tournament_obj, player=p, group='C')
+                    tp.save()
                 if row['D']:
                     p = self.get_player_obj(row['D'])
                     g = GroupDPlayer(tournament=tournament_obj, player=p, winnings=0)
                     g.save()
+                    tp = TournamentPlayer(tournament=tournament_obj, player=p, group='D')
+                    tp.save()
 
 
     def get_player_obj(self, player_name):
