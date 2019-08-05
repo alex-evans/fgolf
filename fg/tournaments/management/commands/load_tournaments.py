@@ -36,6 +36,8 @@ class Command(BaseCommand):
         field = soup.find_all('tr',{'class':'Table2__tr Table2__even'})
         for row in field:
             name = row.findAll('td')[1].get_text()
+            if ' (a)' in name:
+                name = name.replace(' (a)','')
             player_obj = self.get_player_obj(name)
             t_player_obj = self.get_tournament_player_obj(tournament, player_obj)
             t_player_obj.winnings = self.format_winnings(row.findAll('td')[8].get_text())

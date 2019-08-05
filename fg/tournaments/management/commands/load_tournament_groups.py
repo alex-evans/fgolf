@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from tournaments.models import Player, Tournament, TournamentPlayer, GroupAPlayer, GroupBPlayer, GroupCPlayer, GroupDPlayer
+from tournaments.models import Player, Tournament, TournamentPlayer
 import csv
 import os
 
