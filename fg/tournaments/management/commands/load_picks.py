@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from tournaments.models import Player, Person, Tournament, TournamentPick, GroupAPlayer, GroupBPlayer, GroupCPlayer, GroupDPlayer
+from tournaments.models import Player, Person, Tournament, TournamentPlayer, TournamentPick, GroupAPlayer, GroupBPlayer, GroupCPlayer, GroupDPlayer
 import csv
 import os
 import sys
@@ -26,10 +26,10 @@ class Command(BaseCommand):
 
     
     def save_picks(self, tournament_obj):
-        group_a_obj = GroupAPlayer.objects.filter(tournament=tournament_obj)
-        group_b_obj = GroupBPlayer.objects.filter(tournament=tournament_obj)
-        group_c_obj = GroupCPlayer.objects.filter(tournament=tournament_obj)
-        group_d_obj = GroupDPlayer.objects.filter(tournament=tournament_obj)
+        # group_a_obj = GroupAPlayer.objects.filter(tournament=tournament_obj)
+        # group_b_obj = GroupBPlayer.objects.filter(tournament=tournament_obj)
+        # group_c_obj = GroupCPlayer.objects.filter(tournament=tournament_obj)
+        # group_d_obj = GroupDPlayer.objects.filter(tournament=tournament_obj)
         path = '/Users/alexevans/Desktop/Projects/fgolf/fg/external_files/csvs/'
         os.chdir(path)
         file_name = tournament_obj.file_name + "_picks.csv"
@@ -37,21 +37,17 @@ class Command(BaseCommand):
             reader = csv.DictReader(csvfile)
             for row in reader:
                 person_obj = self.get_person_obj(row['PERSON'])
-                player_a_obj = self.get_player_obj(row['A'])
-                player_b_obj = self.get_player_obj(row['B'])
-                player_c_obj = self.get_player_obj(row['C'])
-                player_d_obj = self.get_player_obj(row['D'])
-                player_group_a_obj = self.verify_player_in_group(player_a_obj, 'A', tournament_obj)
-                player_group_b_obj = self.verify_player_in_group(player_b_obj, 'B', tournament_obj)
-                player_group_c_obj = self.verify_player_in_group(player_c_obj, 'C', tournament_obj)
-                player_group_d_obj = self.verify_player_in_group(player_d_obj, 'D', tournament_obj)
+                t_player_a_obj = self.get_player_obj(row['A'], tournament_obj, 'A')
+                t_player_b_obj = self.get_player_obj(row['B'], tournament_obj, 'B')
+                t_player_c_obj = self.get_player_obj(row['C'], tournament_obj, 'C')
+                t_player_d_obj = self.get_player_obj(row['D'], tournament_obj, 'D')
                 picks = TournamentPick(
                     tournament = tournament_obj,
                     person = person_obj,
-                    pick_a = player_group_a_obj,
-                    pick_b = player_group_b_obj,
-                    pick_c = player_group_c_obj,
-                    pick_d = player_group_d_obj,
+                    pick_a = t_player_a_obj,
+                    pick_b = t_player_b_obj,
+                    pick_c = t_player_c_obj,
+                    pick_d = t_player_d_obj,
                     total_winnings = 0
                 )
                 picks.save()
@@ -68,46 +64,16 @@ class Command(BaseCommand):
             sys.exit()
 
     
-    def get_player_obj(self, player_name):
+    def get_player_obj(self, player_name, tournament, group):
         try:
             if player_name[-1:] == " ":
                 player_name = player_name[:-1]
             p = Player.objects.get(name=player_name)
-            return p
+            tp = TournamentPlayer.objects.get(tournament=tournament, player=p, group=group)
+            return tp
         except Player.DoesNotExist:
             print(f"ERROR: Player not found {player_name}")
             sys.exit()
-
-
-    def verify_player_in_group(self, player_obj, group_type, tournament_obj):
-        if group_type == 'A':
-            try:
-                p = GroupAPlayer.objects.get(tournament=tournament_obj, player=player_obj)
-                return p
-            except GroupAPlayer.DoesNotExist:
-                print(f"ERROR: Player, {player_obj.name}, not in Group A")
-                sys.exit()
-
-        if group_type == 'B':
-            try:
-                p = GroupBPlayer.objects.get(tournament=tournament_obj, player=player_obj)
-                return p
-            except GroupBPlayer.DoesNotExist:
-                print(f"ERROR: Player, {player_obj.name}, not in Group B")
-                sys.exit()
-
-        if group_type == 'C':
-            try:
-                p = GroupCPlayer.objects.get(tournament=tournament_obj, player=player_obj)
-                return p
-            except GroupCPlayer.DoesNotExist:
-                print(f"ERROR: Player, {player_obj.name}, not in Group C")
-                sys.exit()
-
-        if group_type == 'D':
-            try:
-                p = GroupDPlayer.objects.get(tournament=tournament_obj, player=player_obj)
-                return p
-            except GroupDPlayer.DoesNotExist:
-                print(f"ERROR: Player, {player_obj.name}, not in Group D")
-                sys.exit()
+        except TournamentPlayer.DoesNotExist:
+            print(f"ERROR: Player not found in group, {player} - {group}")
+            sys.exit()

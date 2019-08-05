@@ -14,20 +14,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         tournament_obj = Tournament.objects.get(name=options['tournament'])
-        self.clear_groups(tournament_obj)
         self.save_groups(tournament_obj)
         self.stdout.write(self.style.SUCCESS(f'Successfully loaded {tournament_obj.name}\'s Player Groupings'))
-
-
-    def clear_groups(self, tournament_obj):
-        a = GroupAPlayer.objects.filter(tournament=tournament_obj)
-        b = GroupBPlayer.objects.filter(tournament=tournament_obj)
-        c = GroupCPlayer.objects.filter(tournament=tournament_obj)
-        d = GroupDPlayer.objects.filter(tournament=tournament_obj)
-        a.delete()
-        b.delete()
-        c.delete()
-        d.delete()
 
 
     def save_groups(self, tournament_obj):
@@ -39,37 +27,31 @@ class Command(BaseCommand):
             for row in reader:
                 if row['A']:
                     p = self.get_player_obj(row['A'])
-                    g = GroupAPlayer(tournament=tournament_obj, player=p, winnings=0)
-                    g.save()
-                    tp = TournamentPlayer(tournament=tournament_obj, player=p, group='A')
-                    tp.save()
+                    self.set_tournament_player_group(tournament_obj, p, 'A')
                 if row['B']:
                     p = self.get_player_obj(row['B'])
-                    g = GroupBPlayer(tournament=tournament_obj, player=p, winnings=0)
-                    g.save()
-                    tp = TournamentPlayer(tournament=tournament_obj, player=p, group='B')
-                    tp.save()
+                    self.set_tournament_player_group(tournament_obj, p, 'B')
                 if row['C']:
                     p = self.get_player_obj(row['C'])
-                    g = GroupCPlayer(tournament=tournament_obj, player=p, winnings=0)
-                    g.save()
-                    tp = TournamentPlayer(tournament=tournament_obj, player=p, group='C')
-                    tp.save()
+                    self.set_tournament_player_group(tournament_obj, p, 'C')
                 if row['D']:
                     p = self.get_player_obj(row['D'])
-                    g = GroupDPlayer(tournament=tournament_obj, player=p, winnings=0)
-                    g.save()
-                    tp = TournamentPlayer(tournament=tournament_obj, player=p, group='D')
-                    tp.save()
+                    self.set_tournament_player_group(tournament_obj, p, 'D')
 
 
     def get_player_obj(self, player_name):
         try:
-            p = Player.objects.get(name=player_name)
+            return Player.objects.get(name=player_name)
         except Player.DoesNotExist:
-            p = Player(name=player_name)
-            p.save()
-        return p
+            print(f"ERROR: Player does not exist: {player_name}")        
         
 
-        
+    def set_tournament_player_group(self, tournament, player, group):
+        if not player:
+            return
+        try:
+            tp = TournamentPlayer.objects.get(tournament=tournament, player=player)
+            tp.group = group
+            tp.save()
+        except TournamentPlayer.DoesNotExist:
+            print(f"ERROR: Tournament Player does not exist: {tournament} - {player} - {group}")
