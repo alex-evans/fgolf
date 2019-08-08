@@ -1,3 +1,4 @@
 from django.test import TestCase
+from .models import Tournament
 
-# Create your tests here.
+
