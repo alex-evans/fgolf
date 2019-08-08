@@ -4,5 +4,59 @@
 
 <h1>{{ tournament.name }}</h1>
 
+<form>
+    {% for p in person %}
+        <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-2">
+                <label for="person">{{ p.name }}</label>
+            </div>
+            <div class="col-sm-2">
+                <select id="inputA" class="form-control">
+                    <option selected>Group A Pick...</option>
+                    {% for pl in player %}
+                        {% if pl.group == "A" %}
+                            <option>{{ pl.player.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <select id="inputB" class="form-control">
+                    <option selected>Group B Pick...</option>
+                    {% for pl in player %}
+                        {% if pl.group == "B" %}
+                            <option>{{ pl.player.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <select id="inputC" class="form-control">
+                    <option selected>Group C Pick...</option>
+                    {% for pl in player %}
+                        {% if pl.group == "C" %}
+                            <option>{{ pl.player.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>        
+            </div>
+            <div class="col-sm-2">
+                <select id="inputD" class="form-control">
+                    <option selected>Group D Pick...</option>
+                    {% for pl in player %}
+                        {% if pl.group == "D" %}
+                            <option>{{ pl.player.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-1">
+            </div>
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 
 {% endblock %}
